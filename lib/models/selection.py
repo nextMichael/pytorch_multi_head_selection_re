@@ -253,7 +253,7 @@ class MultiHeadSelection(nn.Module):
 
         def find_entity(pos, text, sequence_tags):
             entity = []
-            if pos < len(sequence_tags)+1:
+            if pos < len(sequence_tags):
                 if sequence_tags[pos] in ('B', 'O'):
                     entity.append(text[pos])
                 else:
