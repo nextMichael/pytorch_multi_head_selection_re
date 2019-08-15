@@ -282,14 +282,15 @@ class MultiHeadSelection(nn.Module):
             object = find_entity(o, text_list[b], tags)
             subject = find_entity(s, text_list[b], tags)
 
-            assert object != '' and subject != ''
+            # assert object != '' and subject != ''
 
             triplet = {
                 'object': object,
                 'predicate': predicate,
                 'subject': subject
             }
-            result[b].append(triplet)
+            if object != '' and subject != '':
+                result[b].append(triplet)
         return result
 
     def get_metrics(self, reset: bool = False) -> Dict[str, float]:
