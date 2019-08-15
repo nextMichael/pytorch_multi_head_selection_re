@@ -15,11 +15,12 @@
     "rel_emb_size": 100,
     "bio_emb_size": 50,
     "hidden_size": 300,
+    "dropout": 0.2,
     "threshold": 0.5,
     "activation": "tanh",
     "optimizer": "adam",
     "epoch_num": 30,
     "train_batch": 100,
-    "eval_batch": 400,
+    "eval_batch": 100,
     "gpu":1
 }

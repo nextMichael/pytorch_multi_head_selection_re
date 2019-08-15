@@ -85,6 +85,8 @@ class MultiHeadSelection(nn.Module):
         self.emission = nn.Linear(hyper.hidden_size, len(self.bio_vocab) - 1)
 
         self.bert2hidden = nn.Linear(768, hyper.hidden_size)
+
+        self.dropout = nn.Dropout(p=self.hyper.dropout)
         # for bert_lstm
         # self.bert2hidden = nn.Linear(768, hyper.emb_size)
 
@@ -162,6 +164,9 @@ class MultiHeadSelection(nn.Module):
             # o = self.activation(o)
             # torch.Size([16, 310, 768])
             o = self.bert2hidden(o)
+
+            # add dropout
+            o = self.dropout(o)
 
             # below for bert+lstm
             # o, h = self.post_lstm(o)
@@ -248,20 +253,20 @@ class MultiHeadSelection(nn.Module):
 
         def find_entity(pos, text, sequence_tags):
             entity = []
-
-            if sequence_tags[pos] in ('B', 'O'):
-                entity.append(text[pos])
-            else:
-                temp_entity = []
-                while sequence_tags[pos] == 'I':
-                    temp_entity.append(text[pos])
-                    pos -= 1
-                    if pos < 0:
-                        break
-                    if sequence_tags[pos] == 'B':
+            if pos < len(sequence_tags)+1:
+                if sequence_tags[pos] in ('B', 'O'):
+                    entity.append(text[pos])
+                else:
+                    temp_entity = []
+                    while sequence_tags[pos] == 'I':
                         temp_entity.append(text[pos])
-                        break
-                entity = list(reversed(temp_entity))
+                        pos -= 1
+                        if pos < 0:
+                            break
+                        if sequence_tags[pos] == 'B':
+                            temp_entity.append(text[pos])
+                            break
+                    entity = list(reversed(temp_entity))
             return ''.join(entity)
 
         batch_num = len(sequence_tags)
