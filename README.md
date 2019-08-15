@@ -8,8 +8,8 @@ This model is extreamly useful for real-world RE usage. I originally reimplement
 
 # Requirement
 
-* python 3.7
-* pytorch 1.10
+* python 3.6
+* pytorch 1.20
 
 # Dataset
 
