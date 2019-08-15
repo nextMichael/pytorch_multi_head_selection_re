@@ -2,6 +2,7 @@ import json
 
 from dataclasses import dataclass
 
+
 @dataclass
 class Hyper(object):
     def __init__(self, path: str):

@@ -54,9 +54,9 @@ class MultiHeadSelection(nn.Module):
                                    batch_first=True)
         elif hyper.cell_name == 'bert':
             self.post_lstm = nn.LSTM(hyper.emb_size,
-                                   hyper.hidden_size,
-                                   bidirectional=True,
-                                   batch_first=True)
+                                     hyper.hidden_size,
+                                     bidirectional=True,
+                                     batch_first=True)
             self.encoder = BertModel.from_pretrained(os.path.join(self.bert_root, 'bert-base-chinese-pytorch_model.bin'), config=self.bert_config)
             for name, param in self.encoder.named_parameters():
                 if '11' in name:
@@ -90,7 +90,8 @@ class MultiHeadSelection(nn.Module):
 
         if self.hyper.cell_name == 'bert':
 
-            self.bert_tokenizer = BertTokenizer.from_pretrained(self.bert_root + '/', tokenize_chinese_chars=True, config=self.bert_config)
+            self.bert_tokenizer = BertTokenizer.from_pretrained(self.bert_root + '/', tokenize_chinese_chars=True,
+                                                                config=self.bert_config)
 
         # self.accuracy = F1Selection()
 
@@ -182,7 +183,7 @@ class MultiHeadSelection(nn.Module):
         else:
             decoded_tag = self.tagger.decode(emissions=emi, mask=bio_mask)
 
-            output['decoded_tag'] = [list(map(lambda x : self.id2bio[x], tags)) for tags in decoded_tag]
+            output['decoded_tag'] = [list(map(lambda x: self.id2bio[x], tags)) for tags in decoded_tag]
             output['gold_tags'] = bio_text
 
             temp_tag = copy.deepcopy(decoded_tag)
@@ -214,7 +215,6 @@ class MultiHeadSelection(nn.Module):
         #                                         self.relation_emb.weight).unsqueeze(1)
         #     selection_logits_list.append(selection_logits_i)
         # selection_logits = torch.cat(selection_logits_list,dim=1)
-
 
         if not is_train:
             output['selection_triplets'] = self.inference(
