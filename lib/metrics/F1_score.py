@@ -38,14 +38,14 @@ class F1_triplet(F1_abc):
         for g, p in zip(gold_labels, predictions):
             try:
                 g_set = set('_'.join((gg['object'], gg['predicate'],
-                                    gg['subject'])) for gg in g)
+                                      gg['subject'])) for gg in g)
                 p_set = set('_'.join((pp['object'], pp['predicate'],
-                                    pp['subject'])) for pp in p)
+                                      pp['subject'])) for pp in p)
             except:
                 g_set = set('_'.join((''.join(gg['object']), gg['predicate'],
-                                    ''.join(gg['subject']))) for gg in g)
+                                      ''.join(gg['subject']))) for gg in g)
                 p_set = set('_'.join((''.join(pp['object']), pp['predicate'],
-                                    ''.join(pp['subject']))) for pp in p)
+                                      ''.join(pp['subject']))) for pp in p)
             self.A += len(g_set & p_set)
             self.B += len(p_set)
             self.C += len(g_set)
@@ -56,7 +56,6 @@ class F1_ner(F1_abc):
     @overrides
     def __call__(self, predictions: List[List[str]], gold_labels: List[List[str]]):
         for g, p in zip(gold_labels, predictions):
-
             inter = sum(tok_g == tok_p and tok_g in ('B', 'I')
                         for tok_g, tok_p in zip(g, p))
             bi_g = sum(tok_g in ('B', 'I') for tok_g in g)

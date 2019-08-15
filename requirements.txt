@@ -5,3 +5,4 @@ prefetch-generator==1.0.1
 tqdm==4.32.1
 dataclasses == 0.6
 cached-property == 1.5.1
+overrides == 1.9
