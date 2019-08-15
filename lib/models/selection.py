@@ -166,7 +166,8 @@ class MultiHeadSelection(nn.Module):
             o = self.bert2hidden(o)
 
             # add dropout
-            o = self.dropout(o)
+            if is_train:
+                o = self.dropout(o)
 
             # below for bert+lstm
             # o, h = self.post_lstm(o)
