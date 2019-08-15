@@ -66,6 +66,10 @@ The model was originally used for Chinese IE, thus, it's a bit different from th
 
 They use pretrained char-word embedding while we use word embedding initialized randomly; they use 3-layer LSTM while we use 1-layer LSTM.
 
-# TODO
+# ADD
+offline bert model
+fix bugs of bert tokenizer
+update and add all requirements
 
-* Tune the hyperparameters for CoNLL04
+# TODO
+* Tune the hyperparameters of BERT+MUL for Chinese

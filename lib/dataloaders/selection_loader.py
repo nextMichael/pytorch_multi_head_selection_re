@@ -18,6 +18,7 @@ class Selection_Dataset(Dataset):
     def __init__(self, hyper, dataset):
         self.hyper = hyper
         self.data_root = hyper.data_root
+        self.bert_root = hyper.bert_root
 
         self.word_vocab = json.load(
             open(os.path.join(self.data_root, 'word_vocab.json'), 'r'))
@@ -32,8 +33,7 @@ class Selection_Dataset(Dataset):
         self.spo_list = []
 
         # for bert only
-        self.bert_tokenizer = BertTokenizer.from_pretrained(
-            'bert-base-uncased')
+        self.bert_tokenizer = BertTokenizer.from_pretrained(self.bert_root + '/')
 
         for line in open(os.path.join(self.data_root, dataset), 'r'):
             line = line.strip("\n")
@@ -50,7 +50,7 @@ class Selection_Dataset(Dataset):
         bio = self.bio_list[index]
         spo = self.spo_list[index]
         if self.hyper.cell_name == 'bert':
-            text, bio, selection = self.pad_bert(text, bio, selection)
+            text, bio, selection = self.pad_bert(self.bert_tokenizer.tokenize(text), bio, selection)
             tokens_id = torch.tensor(
                 self.bert_tokenizer.convert_tokens_to_ids(text))
         else:

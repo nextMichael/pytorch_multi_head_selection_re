@@ -8,6 +8,7 @@ class Hyper(object):
         self.dataset: str
         self.model: str
         self.data_root: str
+        self.bert_root: str
         self.raw_data_root: str
         self.train: str
         self.dev: str

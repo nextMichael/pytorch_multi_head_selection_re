@@ -19,8 +19,10 @@ class MultiHeadSelection(nn.Module):
 
         self.hyper = hyper
         self.data_root = hyper.data_root
+        self.bert_root = hyper.bert_root
+        self.bert_config = BertConfig.from_json_file(os.path.join(self.bert_root, 'bert-base-chinese-config.json'))
         self.gpu = hyper.gpu
-
+       
         self.word_vocab = json.load(
             open(os.path.join(self.data_root, 'word_vocab.json'), 'r'))
         self.relation_vocab = json.load(
@@ -55,7 +57,7 @@ class MultiHeadSelection(nn.Module):
                                    hyper.hidden_size,
                                    bidirectional=True,
                                    batch_first=True)
-            self.encoder = BertModel.from_pretrained('bert-base-uncased')
+            self.encoder = BertModel.from_pretrained(os.path.join(self.bert_root, 'bert-base-chinese-pytorch_model.bin'), config=self.bert_config)
             for name, param in self.encoder.named_parameters():
                 if '11' in name:
                     param.requires_grad = True
@@ -88,8 +90,7 @@ class MultiHeadSelection(nn.Module):
 
         if self.hyper.cell_name == 'bert':
 
-            self.bert_tokenizer = BertTokenizer.from_pretrained(
-                'bert-base-uncased')
+            self.bert_tokenizer = BertTokenizer.from_pretrained(self.bert_root + '/', tokenize_chinese_chars=True, config=self.bert_config)
 
         # self.accuracy = F1Selection()
 
