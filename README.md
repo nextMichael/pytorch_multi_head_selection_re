@@ -73,3 +73,4 @@ update and add all requirements
 
 # TODO
 * Tune the hyperparameters of BERT+MUL for Chinese
+* Add full fine-tune bert
