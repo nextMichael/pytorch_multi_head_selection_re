@@ -117,7 +117,7 @@ class Runner(object):
 
             triplet_result = self.triplet_metrics.get_metric()
             ner_result = self.ner_metrics.get_metric()
-            logging.info('Triplets-> ' + ', '.join([
+            print('Triplets-> ' + ', '.join([
                 "%s: %.4f" % (name[0], value)
                 for name, value in triplet_result.items() if not name.startswith("_")
             ]) + ' ||' + 'NER->' + ', '.join([
