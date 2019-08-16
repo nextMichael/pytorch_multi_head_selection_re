@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import logging
 import argparse
 
 import torch
@@ -116,7 +117,7 @@ class Runner(object):
 
             triplet_result = self.triplet_metrics.get_metric()
             ner_result = self.ner_metrics.get_metric()
-            print('Triplets-> ' +  ', '.join([
+            logging.info('Triplets-> ' + ', '.join([
                 "%s: %.4f" % (name[0], value)
                 for name, value in triplet_result.items() if not name.startswith("_")
             ]) + ' ||' + 'NER->' + ', '.join([
